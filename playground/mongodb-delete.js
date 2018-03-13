@@ -12,9 +12,9 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp',(err,db)=>{
 //   console.log(result);
 // });
 db.collection('IInfor').findOneAndDelete({
-  _id:new ObjectID("5aa81c0876c4e47f130967c6")
+  _id:new ObjectID("5aa769a44cc1ea0c70685eb7")
 }).then((results) =>{
-  console.log(JSON.stringify(results,undefined , 2));
+  console.log(JSON.stringify(results,undefind , 2));
 });
 // db.collection('IInfor').deleteMany({name:'sanju'});
 
@@ -24,9 +24,9 @@ db.collection('IInfor').findOneAndDelete({
 // });
 
 //find one And delete
-// db.collection('Todos').findOneAndDelete({completed:'false'}).then((result)=>{
-//   console.log(result);
-// });
+db.collection('Todos').findOneAndDelete({completed:'false'}).then((result)=>{
+  console.log(result);
+});
 
   // db.close();
 });
