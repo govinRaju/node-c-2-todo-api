@@ -4,7 +4,7 @@ var {ObjectID} =require('mongodb');
 
 var {mongoose}=require('./db/mongoose');
 var {Todo} = require('./models/todo');
-var {user} =require('./models/user');
+var {User} =require('./models/user');
 
 var app = express();
 const port =process.env.PORT || 3000;
@@ -28,9 +28,8 @@ app.get('/todos',(req,res)=>{
     res.send({todos});
   },(e)=>{
     res.status(400).send(e);
-  })
+  });
 });
-
 //GET/todos/1234234
 app.get('/todos/:id',(req,res)=>{
   var id =req.params.id;
@@ -49,6 +48,25 @@ Todo.findById(id).then((todo)=>{
   res.status(400).send();
 });
 });
+app.delete('/todo/:id',(req,res)=>{
+  //get the id
+var id=req.params.id;
+  //validate the id -> not valid return 404
+    if(ObjectID.isValid(id)){
+     return res.status(400).send();
+   };
+  //remove todo by id
+Todo.findOneAndRemove(id).then((todo) =>{
+  if(!todo){
+  return res.status(404).send();
+}
+
+res.send(todo);
+}).catch((e)=>{
+  res.status(400).send();
+});
+});
+
 app.listen(port, () => {
   console.log(`started up at port ${port}`);
 });
